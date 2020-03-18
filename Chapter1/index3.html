@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">{{message}}
+        <child-component v-bind:popsdata="message"></child-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var eventBus = new Vue()
+
+        Vue.component('child-component', {
+            template: '<p>{{popsdata}}',
+            props:['popsdata']
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello'
+            },
+            created: function() {
+                eventBus.$on('triggerEvent', function(value) {
+                    console.log("이벤트 : " + value+", " + this.message)
+                    app.$data.message = "이벤트 : " + value
+                })
+            }
+        })
+
+    </script>
+</body>
+</html>

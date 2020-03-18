@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <todo-footer v-bind:message="message"></todo-footer>
+        <todo-list v-on:test="onTest"></todo-list>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var cmp1 = {
+            template: '<p>This is another global component : {{cmp1Data}}, {{message}}</p>',
+            props: ['message'],
+            data: function () {
+                return {
+                    cmp1Data: 100
+                }
+            }
+        }
+        var cmp2 = {
+            template: '<button v-on:click="clickButton">클릭</button>',
+            props: ['message'],
+            data: function () {
+                return {
+                    cmp2Data: cmp1.data().cmp1Data
+                }
+            },
+            methods: {
+                clickButton: function () {
+                    this.$emit('test')
+                }
+            }
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'This is parent'
+            },
+            components: {
+                'todo-footer': cmp1,
+                'todo-list': cmp2
+            },
+            methods: {
+                onTest: function() {
+                    console.log("test!!!")
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
