@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <p :id="idA">{{reverseMessage}}</p>
+        <p :class="classA">클래스</p>
+        <p :style="styleA">스타일</p>
+        <p v-if="flag">보이냐</p>
+        <p v-show="flag">보이지?</p>
+        <ul>
+            <li v-for="system in systems">{{system}}</li>
+        </ul>
+
+        <button v-on:click="reverse">클릭</button>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                idA: 10,
+                classA: 'container',
+                styleA: 'color:blue',
+                message: 'Hello',
+                flag: true,
+                systems: ['android', 'ios', 'windows']
+            },
+            computed: {
+                reverseMessage: function() {
+                    console.log("!!! reverse !!!")
+                    return this.message.split('').reverse().join('')
+                }
+            },
+            watch: {
+                message: function(data) {
+                    console.log("changed:" + data)
+                }
+            },
+            methods: {
+                popup: function(event) {
+                    console.log(this.reverseMessage)
+                    this.flag = !this.flag
+                },
+                reverse: function() {
+                    this.message = this.message.split('').reverse().join('')
+                    return this.message
+                }
+            }
+        })
+    </script>
+</body>
+</html>
